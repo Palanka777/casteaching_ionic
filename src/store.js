@@ -1,10 +1,27 @@
+import {Storage} from "@ionic/storage";
+const store = new Storage();
+
+(async ()=>{
+    try{
+        await store.create();
+    }catch (e){
+        console.log('Error initializing.store')
+        console.log(e);
+    }
+})();
+
 export default {
     debug:false,
-    user: {
-        name:'Pepe'
-    },
-    get(state){
+    user:null,
+    token:null,
+    async get(state){
         if (this.debug) console.log('getMessageAction triggered with', state)
-        return this[state]
+        return await store.get(state)
+    },
+    async set(state,value){
+        if (this.debug) console.log('setMessageAction triggered with', state,value)
+        this[state]=value
+        await store.set(state,value)
+
     }
 }

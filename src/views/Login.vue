@@ -12,10 +12,26 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
       </ion-header>
-      <div>
-        <h1>Login</h1>
-        TODO show login info
-      </div>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Please login</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+
+          <ion-item>
+            <ion-label>Email</ion-label>
+            <ion-input v-model="email" placeholder="email" type="text"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Password</ion-label>
+            <ion-input v-model="password" placeholder="password" type="password"></ion-input>
+          </ion-item>
+
+          <ion-button @click="login">Login</ion-button>
+
+        </ion-card-content>
+      </ion-card>
 
     </ion-content>
   </ion-page>
@@ -24,20 +40,116 @@
 </template>
 
 <script>
-import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
+import {
+  IonButton,
+  IonButtons, IonCard,
+  IonCardContent, IonCardHeader, IonCardSubtitle,
+  IonContent,
+  IonHeader, IonInput, IonItem, IonLabel,
+  IonMenuButton,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from "@ionic/vue";
+import {Device} from "@capacitor/device";
+import axios from "axios"
+import store from "../store";
 
 export default {
   name: "Login",
-  components:{
-    IonPage,
+  components: {
+    IonButton,
+    IonButtons,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardSubtitle,
     IonContent,
     IonHeader,
-    IonToolbar,
-    IonButtons,
+    IonInput,
+    IonItem,
+    IonLabel,
     IonMenuButton,
+    IonPage,
     IonTitle,
+    IonToolbar
+
+  },
+  data() {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    async login() {
+      const info = await Device.getInfo();
+
+      //todo
+      let token = null
+      const device_name = (info && info.name) || 'TokenCasteachingIonic'
+      /*     try {
+             token=casteaching.login(this.email,this.password,device_name)
+           }catch(error){
+           console.log(error)
+           }*/
+
+//TOKEN SfDeLlzPG3rGpvK9ihoCiCbNFuEwTNMOBaDxTuTT
+      const apiClient = axios.create({
+        baseURL: 'https://casteaching.davidpont.me/api',
+        withCredentials: true,
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          //Authorization: 'Bearer SfDeLlzPG3rGpvK9ihoCiCbNFuEwTNMOBaDxTuTT'
+        }
+      })
+      const postData = {
+        email: this.email,
+        password: this.password,
+        device_name: device_name
+
+      }
+      let response = null
+      let response2 = null
+
+      try {
+        response = await apiClient.post('/sanctum/token', postData)
+      } catch (error) {
+        console.log(error);
+      }
+
+      token = response.data
+
+      const axiosClient = axios.create({
+        baseURL: 'https://casteaching.davidpont.me/api',
+        withCredentials: true,
+        headers: {
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: 'Bearer ' + token
+        }
+      })
+      try {
+        response2 = await axiosClient.get('/user')
+      } catch (error) {
+        console.log(error);
+      }
+      const user = response2.data
+
+      store.set('token',token)
+      store.set('user',user)
+
+      let path = '/user'
+      console.log(this.$route.params)
+      if(this.$route.params && this.$route.params.wantedRoute) path = this.$route.params.wantedRoute
+      console.log(path)
+      this.$router.push({path})
+    }
 
   }
+
+
 }
 </script>
 

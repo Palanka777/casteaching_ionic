@@ -39,37 +39,49 @@ import { archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, heartOutl
 export default defineComponent({
   name: 'App',
   components: {
-    IonApp, 
-    IonContent, 
-    IonIcon, 
-    IonItem, 
-    IonLabel, 
-    IonList, 
-    IonListHeader, 
-    IonMenu, 
-    IonMenuToggle, 
-    IonNote, 
-    IonRouterOutlet, 
+    IonApp,
+    IonContent,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonListHeader,
+    IonMenu,
+    IonMenuToggle,
+    IonNote,
+    IonRouterOutlet,
     IonSplitPane,
   },
   setup() {
-    const selectedIndex = ref(0);
+    const selectedIndex = ref(1);
     const appPages = [
       {
+        title: 'Dashboard',
+        url: '/dashboard',
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+      },
+      {
         title: 'User Profile',
-        url: '/User',
+        url: '/user',
         iosIcon: mailOutline,
         mdIcon: mailSharp
       },
       {
         title: 'Login',
-        url: '/Login',
+        url: '/login',
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+      },
+      {
+        title: 'Logout',
+        url: '/logout',
         iosIcon: mailOutline,
         mdIcon: mailSharp
       },
       {
         title: 'Video 1',
-        url: '/videos/1',
+        url: '/videos/4',
         iosIcon: mailOutline,
         mdIcon: mailSharp
       },
@@ -105,31 +117,31 @@ export default defineComponent({
       }
     ];
     const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-    
+
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
       selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
-    
+
     const route = useRoute();
-    
-    return { 
+
+    return {
       selectedIndex,
-      appPages, 
+      appPages,
       labels,
-      archiveOutline, 
-      archiveSharp, 
-      bookmarkOutline, 
-      bookmarkSharp, 
-      heartOutline, 
-      heartSharp, 
-      mailOutline, 
-      mailSharp, 
-      paperPlaneOutline, 
-      paperPlaneSharp, 
-      trashOutline, 
-      trashSharp, 
-      warningOutline, 
+      archiveOutline,
+      archiveSharp,
+      bookmarkOutline,
+      bookmarkSharp,
+      heartOutline,
+      heartSharp,
+      mailOutline,
+      mailSharp,
+      paperPlaneOutline,
+      paperPlaneSharp,
+      trashOutline,
+      trashSharp,
+      warningOutline,
       warningSharp,
       isSelected: (url) => url === route.path ? 'selected' : ''
     }
