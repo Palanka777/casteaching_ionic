@@ -83,50 +83,40 @@ export default {
   },
   methods: {
     async login() {
+
       const info = await Device.getInfo();
 
-      //todo
+      //TODO
       let token = null
       const device_name = (info && info.name) || 'TokenCasteachingIonic'
-      /*     try {
-             token=casteaching.login(this.email,this.password,device_name)
-           }catch(error){
-           console.log(error)
-           }*/
 
-//TOKEN SfDeLlzPG3rGpvK9ihoCiCbNFuEwTNMOBaDxTuTT
       const apiClient = axios.create({
         baseURL: 'https://casteaching.davidpont.me/api',
         withCredentials: true,
         headers: {
           Accept: 'application/json',
-          'Content-type': 'application/json',
-          //Authorization: 'Bearer SfDeLlzPG3rGpvK9ihoCiCbNFuEwTNMOBaDxTuTT'
+          'Content-Type': 'application/json',
         }
       })
       const postData = {
         email: this.email,
         password: this.password,
         device_name: device_name
-
       }
       let response = null
       let response2 = null
-
       try {
         response = await apiClient.post('/sanctum/token', postData)
       } catch (error) {
         console.log(error);
       }
-
       token = response.data
-
       const axiosClient = axios.create({
         baseURL: 'https://casteaching.davidpont.me/api',
         withCredentials: true,
         headers: {
           Accept: 'application/json',
-          'Content-type': 'application/json',
+          'Content-Type': 'application/json',
           Authorization: 'Bearer ' + token
         }
       })
@@ -137,19 +127,16 @@ export default {
       }
       const user = response2.data
 
-      store.set('token',token)
-      store.set('user',user)
+      await store.set('token', token)
+      await store.set('user', user)
+      this.emitter.emit('login',user)
 
       let path = '/user'
-      console.log(this.$route.params)
+
       if(this.$route.params && this.$route.params.wantedRoute) path = this.$route.params.wantedRoute
-      console.log(path)
-      this.$router.push({path})
+      this.$router.push({ path })
     }
-
   }
-
-
 }
 </script>
 

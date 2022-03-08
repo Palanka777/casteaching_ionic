@@ -27,7 +27,7 @@ const routes = [
   },
   {
     path: '',
-    redirect: '/folder/Inbox'
+    redirect: 'dashboard'
   },
   {
     path: '/folder/:id',

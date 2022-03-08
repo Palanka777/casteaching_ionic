@@ -11,6 +11,9 @@
 
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">Video {{ $route.params.id }}</ion-title>
+        </ion-toolbar>
       </ion-header>
       <ion-card>
         <ion-card-header>
@@ -18,24 +21,22 @@
         </ion-card-header>
         <ion-card-content>
 
-          <ion-button @click="logout">logout</ion-button>
+          <ion-button @click="logout">Logout</ion-button>
 
         </ion-card-content>
       </ion-card>
-
     </ion-content>
   </ion-page>
-</template>
-<script>
 
+</template>
+
+<script>
 import store from "../store";
 import {
   IonButton,
   IonButtons,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
+  IonCard, IonCardContent,
+  IonCardHeader, IonCardSubtitle,
   IonContent,
   IonHeader,
   IonMenuButton,
@@ -44,29 +45,29 @@ import {
   IonToolbar
 } from "@ionic/vue";
 export default {
-  name:'Logout',
+  name: 'Logout',
   components: {
-    IonButton,
-    IonButtons,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonContent,
-    IonHeader,
     IonMenuButton,
+    IonContent,
     IonPage,
+    IonButtons,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    IonHeader,
+    IonCard,
+    IonCardHeader,
+    IonCardContent,
+    IonCardSubtitle,
+    IonButton
   },
-
-    methods: {
-    logout(){
-      console.log('logout');
-      store.set('token',null)
-      store.set('user',null)
-      this.$router.push('/login')
-    }
+  methods: {
+    async logout() {
+      await store.set('token', null)
+      const oldUser = await store.get('user')
+      await store.set('user', null)
+      this.emitter.emit('logout',oldUser)
+      // Recomanacions de seguretat -> Esborrar el token -> API backend esborrar tokens -> TODO
+      this.$router.push('/login')    }
   }
 }
 </script>

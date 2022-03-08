@@ -12,8 +12,7 @@ const store = new Storage();
 
 export default {
     debug:false,
-    user:null,
-    token:null,
+
     async get(state){
         if (this.debug) console.log('getMessageAction triggered with', state)
         return await store.get(state)
