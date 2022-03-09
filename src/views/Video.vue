@@ -5,25 +5,22 @@
         <ion-buttons slot="start">
           <ion-menu-button color="primary"></ion-menu-button>
         </ion-buttons>
-        <ion-title>Video {{ video.title }}</ion-title>
+        <ion-title>{{ video.title }}</ion-title>
       </ion-toolbar>
     </ion-header>
-
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Video {{ video.id }}</ion-title>
+          <ion-title size="large">Video {{ $route.params.id }}</ion-title>
         </ion-toolbar>
       </ion-header>
-
       <div id="container">
         <iframe id="video" :src="video.url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         <ion-card>
           <ion-card-header>
-            <ion-card-title>{{video.title}}</ion-card-title>
+            <ion-card-title>{{ video.title }}</ion-card-title>
             <ion-card-subtitle>{{ video.published_at }}</ion-card-subtitle>
           </ion-card-header>
-
           <ion-card-content>
             {{ video.description }}
           </ion-card-content>
@@ -34,8 +31,6 @@
 </template>
 
 <script>
-
-import casteaching from '@acacha/casteaching'
 
 import {
   IonButtons,
@@ -75,7 +70,12 @@ export default {
     }
   },
   async created() {
-    this.video = await casteaching.video.show(this.$route.params.id)
+    try {
+      this.video = await this.casteaching.video.show(this.$route.params.id)
+    }catch (error){
+      console.log(error);
+      //TODO fero amb un toast
+    }
   }
 }
 </script>

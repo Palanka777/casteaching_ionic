@@ -23,6 +23,7 @@ import '@ionic/vue/css/display.css';
 
 
 import './theme/variables.css';
+import casteaching from '@acacha/casteaching'
 
 const app = createApp(App)
   .use(IonicVue)
@@ -30,6 +31,7 @@ const app = createApp(App)
 
 router.isReady().then(() => {
   app.config.globalProperties.emitter = emitter;
+  app.config.globalProperties.casteaching = casteaching({baseUrl:'https://casteaching.davidpont.me/api'});
   app.mount('#app');
 });
 
