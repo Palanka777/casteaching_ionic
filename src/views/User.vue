@@ -12,9 +12,11 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
       </ion-header>
-      <div>
-        <h1>User</h1>
-        name: {{ this.user && this.user.name}}
+      <div class="ion-padding">
+        <h1>{{ this.user && this.user.name}}</h1>
+        <ion-avatar>
+          <img src="https://www.gravatar.com/avatar/046889f49471fd40d105eb76b9d83bf6">
+        </ion-avatar>
       </div>
 
     </ion-content>

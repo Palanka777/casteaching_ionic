@@ -15,14 +15,14 @@
             </ion-menu-toggle>
           </ion-list>
   
-          <ion-list id="labels-list">
+<!--          <ion-list id="labels-list">
             <ion-list-header>Labels</ion-list-header>
   
             <ion-item v-for="(label, index) in labels" lines="none" :key="index">
               <ion-icon slot="start" :ios="bookmarkOutline" :md="bookmarkSharp"></ion-icon>
               <ion-label>{{ label }}</ion-label>
             </ion-item>
-          </ion-list>
+          </ion-list>-->
         </ion-content>
       </ion-menu>
       <ion-router-outlet id="main-content"></ion-router-outlet>
@@ -34,7 +34,7 @@
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent} from 'vue';
 import { useRoute } from 'vue-router';
-import { archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+import { videocam,person, logOutSharp, logOutOutline, logInSharp,logInOutline, homeOutline,homeSharp, archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
 import store from "./store";
 
 export default defineComponent({
@@ -71,12 +71,12 @@ export default defineComponent({
     this.setAppPages()
   },
   setup() {
-    const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+    //const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
     const route = useRoute();
 
     return {
-      labels,
+      //labels,
       archiveOutline,
       archiveSharp,
       bookmarkOutline,
@@ -91,6 +91,7 @@ export default defineComponent({
       trashSharp,
       warningOutline,
       warningSharp,
+
       isSelected: (url) => url === route.path ? 'selected' : ''
     }
   },
@@ -103,43 +104,43 @@ export default defineComponent({
         this.appPages.push({
           title: 'Dashboard',
           url: '/dashboard',
-          iosIcon: mailOutline,
-          mdIcon: mailSharp
+          iosIcon: homeOutline,
+          mdIcon: homeSharp
         })
         this.appPages.push(
             {
               title: 'User Profile',
               url: '/user',
-              iosIcon: mailOutline,
-              mdIcon: mailSharp
+              iosIcon: person,
+              mdIcon: person
             })
       }
       if (!user) {
         this.appPages.push({
           title: 'Login',
           url: '/login',
-          iosIcon: mailOutline,
-          mdIcon: mailSharp
+          iosIcon: logInOutline,
+          mdIcon: logInSharp
         })
       } else {
         this.appPages.push({
           title: 'Logout',
           url: '/logout',
-          iosIcon: mailOutline,
-          mdIcon: mailSharp
+          iosIcon: logOutOutline,
+          mdIcon: logOutSharp
         })
       }
       this.appPages.push({
         title: 'Video 1',
         url: '/videos/1',
-        iosIcon: mailOutline,
-        mdIcon: mailSharp
+        iosIcon: videocam,
+        mdIcon: videocam
       })
       this.appPages.push({
         title: 'Videos',
         url: '/videos',
-        iosIcon: paperPlaneOutline,
-        mdIcon: paperPlaneSharp
+        iosIcon: videocam,
+        mdIcon: videocam
       })
       const path = window.location.pathname;
       console.log('path:');
