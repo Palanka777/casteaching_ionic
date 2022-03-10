@@ -49,7 +49,7 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar, toastController
 } from "@ionic/vue";
 
 import {Device} from "@capacitor/device";
@@ -95,7 +95,7 @@ export default {
         this.casteaching.setToken(token)
       }catch (error){
         console.log(error);
-        //todo afegir toast
+        this.toast()
       }
 
       let user
@@ -103,7 +103,7 @@ export default {
         user = await this.casteaching.user()
       } catch (error) {
         console.log(error);
-        // TODO afegir un toast
+        this.toast()
       }
 
       await store.set('token', token)
@@ -115,10 +115,19 @@ export default {
 
       if(this.$route.params && this.$route.params.wantedRoute) path = this.$route.params.wantedRoute
       this.$router.push({ path })
+    },
+    async toast(){
+      const toast = await toastController
+          .create({
+            message: "Les Dades de Login no son correctes!",
+            duration: 2000
+          })
+      return toast.present();
     }
   }
 }
 </script>
+
 
 <style scoped>
 

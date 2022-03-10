@@ -13,10 +13,23 @@
       <ion-header collapse="condense">
       </ion-header>
       <div class="ion-padding">
-        <h1>{{ this.user && this.user.name}}</h1>
-        <ion-avatar>
-          <img src="https://www.gravatar.com/avatar/046889f49471fd40d105eb76b9d83bf6">
-        </ion-avatar>
+        <ion-card>
+          <ion-avatar v-if="this.user.profile_photo_path">
+            <img :src="this.user && this.user.profile_photo_path">
+          </ion-avatar>
+          <ion-avatar v-else>
+            <img src="http://via.placeholder.com/80">
+          </ion-avatar>
+          <ion-card-header>
+            <ion-card-title>{{ this.user && this.user.name}}</ion-card-title>
+            <ion-card-subtitle v-if="this.user.superadmin">{{this.admin}}</ion-card-subtitle>
+            <p v-else>Usuari sense privilegis</p>
+          </ion-card-header>
+          <ion-card-content>
+            {{ this.user && this.user.email}}
+            <ion-card-subtitle></ion-card-subtitle>
+          </ion-card-content>
+        </ion-card>
       </div>
 
     </ion-content>
@@ -26,7 +39,17 @@
 </template>
 
 <script>
-import {IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
+import {
+  IonAvatar,
+  IonButtons,
+  IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from "@ionic/vue";
 import store from "../store";
 
 export default {
@@ -39,11 +62,22 @@ export default {
     IonButtons,
     IonMenuButton,
     IonTitle,
+    IonAvatar,
+    IonCard,
+    IonCardContent,
+    IonCardSubtitle,
+    IonCardHeader,
+    IonCardTitle,
+
   },
   data(){
     return {
-      user: {}
-    }
+      user: {},
+      }
+
+  },
+  created() {
+    this.admin = "Senyor administrador"
   },
   async mounted(){
     console.log('mounted');
