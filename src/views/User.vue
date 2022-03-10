@@ -13,7 +13,7 @@
       <ion-header collapse="condense">
       </ion-header>
       <div class="ion-padding">
-        <ion-card>
+        <ion-card class="ion-padding">
           <ion-avatar v-if="this.user.profile_photo_path">
             <img :src="this.user && this.user.profile_photo_path">
           </ion-avatar>
