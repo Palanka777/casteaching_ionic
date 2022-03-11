@@ -29,6 +29,9 @@
             {{ this.user && this.user.email}}
             <ion-card-subtitle></ion-card-subtitle>
           </ion-card-content>
+          <ion-button @click="refresh()">
+            Refresh
+          </ion-button>
         </ion-card>
       </div>
 
@@ -41,6 +44,7 @@
 <script>
 import {
   IonAvatar,
+  IonButton,
   IonButtons,
   IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,
   IonContent,
@@ -48,7 +52,8 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar, toastController,
+
 } from "@ionic/vue";
 import store from "../store";
 
@@ -68,7 +73,7 @@ export default {
     IonCardSubtitle,
     IonCardHeader,
     IonCardTitle,
-
+    IonButton
   },
   data(){
     return {
@@ -80,10 +85,34 @@ export default {
     this.admin = "Senyor administrador"
   },
   async mounted(){
-    console.log('mounted');
-    console.log(store.get('user'));
     this.user = await store.get('user')
+  },
+  methods:{
+    async refresh(){
+      let token
+      let user
+      try {
+        token = await store.get('token')
+        this.casteaching.setToken(token)
+        user = await this.casteaching.user()
+      }catch (error){
+        console.log(error);
+        console.log(error);
+        const toast = await toastController
+            .create({
+              message: "Problemes al refrescar el perfil d'usuari",
+              duration: 2000
+            })
+        return toast.present();
+      }
+
+      await store.set('token', token)
+      await store.set('user', user)
+
+      this.user = await store.get('user')
+    }
   }
+
 }
 </script>
 

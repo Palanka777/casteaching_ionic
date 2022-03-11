@@ -14,10 +14,10 @@
       </ion-header>
       <ion-card>
         <ion-card-header>
-          <ion-card-subtitle>Todo Dashboard</ion-card-subtitle>
+          <ion-card-subtitle>En construcció</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
-          TODO DASHBOARD
+          <img src="https://i.postimg.cc/TPHhhHqH/casteaching.png">
         </ion-card-content>
       </ion-card>
 

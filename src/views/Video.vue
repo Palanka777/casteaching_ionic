@@ -44,7 +44,7 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar, toastController
+  IonToolbar,
 } from '@ionic/vue';
 
 export default {
@@ -74,19 +74,10 @@ export default {
     try {
       this.video = await this.casteaching.video.show(this.$route.params.id)
     }catch (error){
-      this.toast()
+      this.$router.push('/:pathMatch(.*)*')
+
     }
   },
-  methods:{
-    async toast(){
-      const toast = await toastController
-          .create({
-            message: "El video no existeix! Error 404 !",
-            duration: 2000
-          })
-      return toast.present();
-    }
-    }
   }
 
 </script>

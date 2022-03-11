@@ -86,7 +86,6 @@ export default {
 
       const info = await Device.getInfo();
 
-      //TODO
       let token = null
       const device_name = (info && info.name) || 'TokenCasteachingIonic'
 
